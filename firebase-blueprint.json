@@ -1,0 +1,148 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with role-based access control (Editor or Visualizador)",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["Editor", "Visualizador"] },
+        "companyId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["email", "displayName", "role"]
+    },
+    "Company": {
+      "title": "Company",
+      "description": "Construction company or contractor entity",
+      "type": "object",
+      "properties": {
+        "razaoSocial": { "type": "string", "maxLength": 256 },
+        "nomeFantasia": { "type": "string", "maxLength": 256 },
+        "cnpj": { "type": "string", "maxLength": 32 },
+        "contato": { "type": "string", "maxLength": 128 },
+        "responsavelTecnico": { "type": "string", "maxLength": 128 },
+        "creaCau": { "type": "string", "maxLength": 64 },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["razaoSocial", "nomeFantasia"]
+    },
+    "Obra": {
+      "title": "Obra",
+      "description": "Construction project record",
+      "type": "object",
+      "properties": {
+        "codigo": { "type": "string", "maxLength": 64 },
+        "nome": { "type": "string", "maxLength": 256 },
+        "cliente": { "type": "string", "maxLength": 256 },
+        "endereco": { "type": "string", "maxLength": 512 },
+        "responsavelTecnico": { "type": "string", "maxLength": 128 },
+        "creaCau": { "type": "string", "maxLength": 64 },
+        "dataInicio": { "type": "string", "maxLength": 32 },
+        "terminoPrevisto": { "type": "string", "maxLength": 32 },
+        "status": { "type": "string", "enum": ["Em Andamento", "Concluída", "Paralisada", "Planejada"] },
+        "percentualAvanco": { "type": "number" },
+        "googleDriveFolderId": { "type": "string", "maxLength": 128 },
+        "companyId": { "type": "string", "maxLength": 128 },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["codigo", "nome", "status"]
+    },
+    "TeamMember": {
+      "title": "TeamMember",
+      "description": "Technical team member linked to construction projects",
+      "type": "object",
+      "properties": {
+        "nome": { "type": "string", "maxLength": 128 },
+        "funcao": { "type": "string", "maxLength": 64 },
+        "obraId": { "type": "string", "maxLength": 128 },
+        "telefone": { "type": "string", "maxLength": 32 },
+        "email": { "type": "string", "maxLength": 128 },
+        "empresaNome": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["Ativo", "Inativo"] },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["nome", "funcao", "obraId"]
+    },
+    "RDO": {
+      "title": "RDO",
+      "description": "Daily Construction Report (Relatório Diário de Obra)",
+      "type": "object",
+      "properties": {
+        "numero": { "type": "number" },
+        "obraId": { "type": "string", "maxLength": 128 },
+        "obraNome": { "type": "string", "maxLength": 256 },
+        "data": { "type": "string", "maxLength": 32 },
+        "responsavel": { "type": "string", "maxLength": 128 },
+        "responsavelId": { "type": "string", "maxLength": 128 },
+        "condicoesClimaticas": { "type": "object" },
+        "etapasFrentes": { "type": "string", "maxLength": 2048 },
+        "atividadesExecutadas": { "type": "string", "maxLength": 8192 },
+        "percentualAvanco": { "type": "number" },
+        "maoDeObra": { "type": "array" },
+        "equipamentos": { "type": "array" },
+        "materiais": { "type": "array" },
+        "ocorrencias": { "type": "string", "maxLength": 4096 },
+        "seguranca": { "type": "string", "maxLength": 4096 },
+        "observacoes": { "type": "string", "maxLength": 4096 },
+        "fotos": { "type": "array" },
+        "status": { "type": "string", "enum": ["Rascunho", "Finalizado"] },
+        "pdfUrl": { "type": "string", "maxLength": 2048 },
+        "assinaturaResponsavel": { "type": "string", "maxLength": 128 },
+        "assinaturaCliente": { "type": "string", "maxLength": 128 },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["numero", "obraId", "data", "status", "createdBy"]
+    },
+    "DocumentItem": {
+      "title": "DocumentItem",
+      "description": "File or document related to an obra",
+      "type": "object",
+      "properties": {
+        "obraId": { "type": "string", "maxLength": 128 },
+        "titulo": { "type": "string", "maxLength": 256 },
+        "tipo": { "type": "string", "enum": ["RDO_PDF", "FOTO", "PLANTA", "RELATORIO", "OUTRO"] },
+        "arquivoUrl": { "type": "string", "maxLength": 4096 },
+        "tamanho": { "type": "string", "maxLength": 64 },
+        "dataUpload": { "type": "string", "maxLength": 64 },
+        "criadoPor": { "type": "string", "maxLength": 128 },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["obraId", "titulo", "tipo", "createdBy"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles and roles"
+    },
+    "/companies/{companyId}": {
+      "schema": "Company",
+      "description": "Stores construction companies and contractors"
+    },
+    "/obras/{obraId}": {
+      "schema": "Obra",
+      "description": "Stores construction sites and projects"
+    },
+    "/teamMembers/{memberId}": {
+      "schema": "TeamMember",
+      "description": "Stores technical team members linked to projects"
+    },
+    "/rdos/{rdoId}": {
+      "schema": "RDO",
+      "description": "Stores daily construction reports"
+    },
+    "/documents/{docId}": {
+      "schema": "DocumentItem",
+      "description": "Stores documents and media metadata"
+    }
+  }
+}

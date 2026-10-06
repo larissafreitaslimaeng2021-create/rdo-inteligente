@@ -1,0 +1,10 @@
+{
+  "name": "RDO Inteligente",
+  "description": "Gestão inteligente do dia a dia da sua obra com Relatórios Diários de Obra, IA por voz e integração em nuvem.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
